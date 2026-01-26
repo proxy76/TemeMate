@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import LoginView from './components/LoginView';
+import Loading from './components/Loading';
 
 function App() {
   const [activeHomework, setActiveHomework] = useState(null);
@@ -11,7 +12,9 @@ function App() {
   const HomeworkComponent = activeHomework.component;
 
   return (
-    <HomeworkComponent />
+    <Suspense fallback={<Loading />}>
+      <HomeworkComponent />
+    </Suspense>
   );
 }
 
