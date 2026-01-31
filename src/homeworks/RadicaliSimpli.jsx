@@ -238,17 +238,28 @@ const ExerciseApp = () => {
                 </div>
 
                 {/* Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
                     {filteredExercises.map((ex) => {
                         const isAdvanced = ex.category === 'avansat';
+                        const isLastStandard = ex.id === 100;
+
+                        let colSpanClass = 'xl:col-span-2'; // Default: 3 per row (6 / 2 = 3)
+
+                        if (isAdvanced) {
+                            colSpanClass = 'xl:col-span-3'; // Advanced: 2 per row (6 / 3 = 2)
+                        } else if (isLastStandard) {
+                            colSpanClass = 'xl:col-span-6'; // ID 100: 1 per row (Full width)
+                        }
+
                         return (
                             <div
                                 key={ex.id}
                                 onClick={() => toggleCard(ex.id)}
                                 className={`relative rounded-xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden group
                   ${isAdvanced
-                                        ? 'border-l-8 border-rose-500 bg-rose-50 xl:col-span-2 shadow-rose-100 hover:shadow-rose-200'
+                                        ? 'border-l-8 border-rose-500 bg-rose-50 shadow-rose-100 hover:shadow-rose-200'
                                         : 'border-l-4 border-slate-300 bg-white hover:border-indigo-300'}
+                  ${colSpanClass}
                   ${revealedState[ex.id]
                                         ? (isAdvanced ? 'ring-2 ring-rose-200' : 'border-indigo-500 ring-2 ring-indigo-100')
                                         : ''}
