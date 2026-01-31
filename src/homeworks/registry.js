@@ -10,5 +10,10 @@ export const homeworkRegistry = {
         id: "hw2",
         component: lazy(() => import('./GeomCls7')),
         title: "Temă Matematică - Geometrie Clasa 7"
+    },
+    [import.meta.env.VITE_CODE_RADEASY_7]: {
+        id: "hw3",
+        component: lazy(() => import('./RadicaliSimpli')),
+        title: "Temă Matematică - Radicali Simpli"
     }
 };
