@@ -15,5 +15,10 @@ export const homeworkRegistry = {
         id: "hw3",
         component: lazy(() => import('./RadicaliSimpli')),
         title: "Temă Matematică - Radicali Simpli"
+    },
+    [import.meta.env.VITE_CODE_M2EZ]: {
+        id: "hw4",
+        component: lazy(() => import('./M2Sub1Simplu')),
+        title: "Temă Matematică - M2"
     }
 };
