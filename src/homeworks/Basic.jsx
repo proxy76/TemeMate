@@ -3,7 +3,7 @@ import React, { useState, useMemo } from 'react';
 // Funcție ajutătoare pentru generarea de numere aleatorii
 const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-export default function App() {
+const BasicApp = () => {
     const [showHints, setShowHints] = useState(false);
 
     // Generăm cele 500 de exerciții o singură dată la încărcarea componentei
@@ -160,4 +160,6 @@ export default function App() {
             </div>
         </div>
     );
-}
+};
+
+export default BasicApp;
