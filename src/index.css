@@ -1,1 +1,2 @@
-@import "tailwindcss";
+@import "tailwindcss";@keyframes shimmer { 100% { transform: translateX(100%); } }
+.group\\/btn:hover .group-hover\\/btn\\:animate-\[shimmer_1.5s_infinite\] { animation: shimmer 1.5s infinite; }
