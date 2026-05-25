@@ -30,5 +30,10 @@ export const homeworkRegistry = {
         id: "hw6",
         component: lazy(() => import('./CalculeBasic')),
         title: "Temă Matematică - Calcule de Bază"
+    },
+    [import.meta.env.VITE_CODE_BASIC3]: {
+        id: "hw7",
+        component: lazy(() => import('./EcuatiiBasic')),
+        title: "Temă Matematică - Ecuații de Baza"
     }
 };
