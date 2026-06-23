@@ -35,5 +35,10 @@ export const homeworkRegistry = {
         id: "hw7",
         component: lazy(() => import('./EcuatiiBasic')),
         title: "Temă Matematică - Ecuații de Baza"
+    },
+    [import.meta.env.VITE_CODE_DERPUT]: {
+        id: "hw8",
+        component: lazy(() => import('./PuteriSiDerivate')),
+        title: "Temă Matematică - Puteri si Derivate"
     }
 };
