@@ -40,5 +40,10 @@ export const homeworkRegistry = {
         id: "hw8",
         component: lazy(() => import('./PuteriSiDerivate')),
         title: "Temă Matematică - Puteri si Derivate"
+    },
+    [import.meta.env.VITE_CODE_CALCM21]: {
+        id: "hw9",
+        component: lazy(() => import('./M2Sub1Ex1')),
+        title: "Temă Matematică - M2 Subunitatea 1 Ex1"
     }
 };
