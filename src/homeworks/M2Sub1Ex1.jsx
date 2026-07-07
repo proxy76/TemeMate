@@ -32,7 +32,7 @@ export default function App() {
         return () => { isMounted = false; };
     }, []);
 
-    // 2. Generarea celor 100 de exerciții 
+    // 2. Generarea celor 140 de exerciții 
     const exercitii = useMemo(() => {
         const lista = [];
 
@@ -232,28 +232,46 @@ export default function App() {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 text-slate-800 font-sans pb-16">
+        <div className="min-h-screen bg-slate-50 text-slate-800 font-sans pb-16 relative">
+            {/* Stiluri injectate pentru a formata o bară de scroll subtilă pentru ecuațiile matematice lungi */}
+            <style>{`
+        .math-scroll::-webkit-scrollbar {
+          height: 6px;
+        }
+        .math-scroll::-webkit-scrollbar-track {
+          background: #f1f5f9;
+          border-radius: 8px;
+        }
+        .math-scroll::-webkit-scrollbar-thumb {
+          background: #cbd5e1;
+          border-radius: 8px;
+        }
+        .math-scroll::-webkit-scrollbar-thumb:hover {
+          background: #94a3b8;
+        }
+      `}</style>
+
             {/* Antet */}
-            <header className="bg-white shadow-sm border-b border-slate-200 p-6 md:p-10 mb-8 sticky top-0 z-10">
+            <header className="bg-white shadow-sm border-b border-slate-200 p-4 sm:p-6 md:p-10 mb-6 sm:mb-8 sticky top-0 z-10">
                 <div className="max-w-7xl mx-auto">
                     <h1 className="text-2xl md:text-4xl font-extrabold text-blue-900 text-center mb-3">
                         Matematică Bac M2 - 140 Exerciții
                     </h1>
-                    <p className="text-center text-slate-600 text-sm md:text-base font-medium">
-                        Subiectul I: radicali, fracții, zecimale, media aritmetică. <br className="md:hidden" />
+                    <p className="text-center text-slate-600 text-sm md:text-base font-medium px-2">
+                        Subiectul I: radicali, fracții, zecimale, media aritmetică. <br className="hidden sm:block" />
                         Click pe exercițiu pentru a vedea hint-ul și rezultatul!
                     </p>
 
-                    <div className="mt-6 flex justify-center gap-4">
+                    <div className="mt-5 sm:mt-6 flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
                         <button
                             onClick={() => setToate(true)}
-                            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow transition-colors text-sm"
+                            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow transition-colors text-sm w-full sm:w-auto"
                         >
                             Arată toate răspunsurile
                         </button>
                         <button
                             onClick={() => setToate(false)}
-                            className="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold rounded-lg shadow transition-colors text-sm"
+                            className="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold rounded-lg shadow transition-colors text-sm w-full sm:w-auto"
                         >
                             Ascunde toate
                         </button>
@@ -262,8 +280,8 @@ export default function App() {
             </header>
 
             {/* Grila de exerciții */}
-            <main className="max-w-7xl mx-auto px-4 md:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <main className="max-w-7xl mx-auto px-3 sm:px-4 md:px-8 w-full pb-20">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
                     {exercitii.map((ex, index) => {
                         const isDeschis = !!deschise[ex.id];
 
@@ -272,40 +290,42 @@ export default function App() {
                                 key={ex.id}
                                 onClick={() => toggleExercitiu(ex.id)}
                                 className={`
-                  cursor-pointer bg-white rounded-xl p-5 border flex flex-col justify-start
-                  transition-all duration-200 transform hover:-translate-y-1 hover:shadow-lg
+                  cursor-pointer bg-white rounded-xl p-4 sm:p-5 border flex flex-col justify-start
+                  transition-all duration-200 transform hover:-translate-y-1 hover:shadow-lg w-full min-w-0
                   ${isDeschis ? 'border-blue-400 shadow-md' : 'border-slate-200 shadow-sm'}
                 `}
                             >
-                                <div className="flex justify-between items-center mb-3">
-                                    <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                                <div className="flex justify-between items-start sm:items-center mb-3 gap-2">
+                                    <span className="text-xs font-bold uppercase tracking-wider text-slate-400 whitespace-nowrap mt-1 sm:mt-0 shrink-0">
                                         Exercițiul {index + 1}
                                     </span>
-                                    <span className="text-[10px] font-semibold bg-blue-50 text-blue-600 py-1 px-2 rounded-full">
+                                    <span className="text-[10px] font-semibold bg-blue-50 text-blue-600 py-1 px-2 rounded-full text-right leading-tight">
                                         {ex.categorie}
                                     </span>
                                 </div>
 
                                 {/* Enunțul */}
-                                <div className="text-lg font-medium text-slate-900 min-h-[3rem] flex items-center">
-                                    {ex.q}
+                                <div className="text-base sm:text-lg font-medium text-slate-900 min-h-[3rem] flex items-center overflow-x-auto math-scroll w-full pb-2">
+                                    <div className="min-w-max pr-2">
+                                        {ex.q}
+                                    </div>
                                 </div>
 
                                 {/* Secțiunea expandabilă (Hint + Răspuns) */}
-                                <div className={`mt-4 pt-4 border-t border-slate-100 ${isDeschis ? 'block' : 'hidden'}`}>
-                                    <div className="text-sm text-slate-700 bg-slate-50 p-3 rounded-lg mb-3 border border-slate-100">
+                                <div className={`mt-2 sm:mt-4 pt-3 sm:pt-4 border-t border-slate-100 ${isDeschis ? 'block' : 'hidden'}`}>
+                                    <div className="text-xs sm:text-sm text-slate-700 bg-slate-50 p-3 rounded-lg mb-3 border border-slate-100 overflow-x-auto math-scroll w-full">
                                         <span className="font-bold text-blue-700 block mb-1">Indiciu:</span>
-                                        <span>{ex.hint}</span>
+                                        <div className="min-w-max pr-2">{ex.hint}</div>
                                     </div>
-                                    <div className="text-base text-green-700 font-bold bg-green-50 p-3 rounded-lg border border-green-100 flex items-center gap-2">
-                                        <span>Răspuns final:</span>
-                                        <span className="text-lg">{ex.ans}</span>
+                                    <div className="text-sm sm:text-base text-green-700 font-bold bg-green-50 p-3 rounded-lg border border-green-100 flex items-center gap-2 overflow-x-auto math-scroll w-full">
+                                        <span className="shrink-0">Răspuns final:</span>
+                                        <span className="text-lg min-w-max pr-2">{ex.ans}</span>
                                     </div>
                                 </div>
 
                                 {/* Mesaj mic cand e inchis */}
                                 {!isDeschis && (
-                                    <div className="mt-4 text-xs text-slate-400 font-medium text-center italic">
+                                    <div className="mt-3 sm:mt-4 text-[11px] sm:text-xs text-slate-400 font-medium text-center italic">
                                         Click pentru rezolvare
                                     </div>
                                 )}
@@ -315,12 +335,14 @@ export default function App() {
                 </div>
             </main>
 
-            { }
-            <div className="fixed bottom-4 right-6 pointer-events-none select-none z-50 flex flex-col items-end opacity-70">
-                <span className="text-slate-500 font-semibold text-[10px] tracking-widest uppercase mb-0.5">Powered by</span>
-                <span className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-500 drop-shadow-md tracking-tight">
-                    Algomate
-                </span>
+            {/* Watermark Algomate */}
+            <div className="fixed bottom-4 right-4 z-50 pointer-events-none opacity-50 flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-lg shadow-sm border border-slate-200">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-600">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                    <path d="M2 17l10 5 10-5" />
+                    <path d="M2 12l10 5 10-5" />
+                </svg>
+                <span className="font-bold text-slate-800 tracking-wide text-sm">Algomate</span>
             </div>
         </div>
     );
